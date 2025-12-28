@@ -14,19 +14,19 @@ const products = {
             'assets/images/shrimp_cave_red.jpg',
             'assets/images/shrimp_cave_maroon.jpg'
         ],
-        description: 'Hang trú ẩn được thiết kế chuyên biệt cho các loài tép cảnh (Red Cherry, Crystal Red...). Thiết kế dạng hộp với các thanh dọc giúp tối ưu hóa diện tích bề mặt cho vi sinh phát triển, đồng thời cung cấp nơi trú ẩn an toàn cho tép con và tép mới lột vỏ. Sản phẩm chìm ngay trong nước, không cần ngâm xử lý. \n\nKích thước: 10cm x 4cm x 4cm \nChất liệu: Nhựa PETG an toàn. \nMàu sắc đa dạng: Hồng, Đen, Đỏ, Đỏ Đậm.'
+        description: 'Hang trú ẩn được thiết kế chuyên biệt cho các loài tép cảnh (Tép Sula, Tép màu, Tép Lạnh). Thiết kế dạng hộp với các thanh dọc giúp tối ưu hóa diện tích bề mặt cho vi sinh phát triển, đồng thời cung cấp nơi trú ẩn an toàn cho tép con và tép mới lột vỏ. Sản phẩm chìm ngay trong nước, không cần ngâm xử lý. \n\nKích thước: 10cm x 5cm x 5cm \nChất liệu: Nhựa PETG an toàn. \nMàu sắc đa dạng: Hồng, Đen, Đỏ, Đỏ Đậm.'
     },
     'pleco_cave': {
         name: 'Hang Sinh Sản Pleco',
-        price: '120.000₫',
+        price: '50.000₫',
         image: 'assets/images/pleco_cave.png',
         description: 'Hang gốm giả (Terracotta style) in 3D với độ hoàn thiện cao. Bề mặt trong nhẵn mịn bảo vệ da cá, thiết kế kín một đầu tạo cảm giác an toàn tuyệt đối cho các dòng cá Pleco (Cá lau kính), Ancistrus sinh sản. Độ bền vĩnh cửu, không phai màu theo thời gian.\n\nKích thước: 15cm x 5cm \nMàu sắc: Xám đậm.'
     },
     'moss_ledge': {
         name: 'Giá Đỡ Rêu / Cây Thủy Sinh',
-        price: '200.000₫',
+        price: '120.000₫',
         image: 'assets/images/moss_ledge.png',
-        description: 'Giải pháp tuyệt vời để tạo mảng xanh trên thành bể kính. Giá đỡ in 3D với thiết kế lưới giúp dễ dàng cột hoặc dán các loại rêu (Java, Christmas, Taiwan...) hoặc Bucephalandra. Đi kèm giác hút chất lượng cao, chịu lực tốt.\n\nBộ sản phẩm gồm: 1 Giá đỡ in 3D + 2 Giác hút.'
+        description: 'Giải pháp tuyệt vời để tạo mảng xanh trên thành bể kính. Giá đỡ in 3D với thiết kế lưới giúp dễ dàng cột hoặc dán các loại rêu (Java, Christmas, Taiwan...) hoặc Bucephalandra. Đi kèm giác hút chất lượng cao, chịu lực tốt.\n\nBộ sản phẩm gồm: 1 Giá đỡ in 3D + 2 Giác hút + 1m dây cước tàng hình'
     },
     'filter_guard': {
         name: 'Đầu Bảo Vệ Hút Lọc',
