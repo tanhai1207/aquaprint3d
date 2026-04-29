@@ -2,7 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#004e64">
     <title>Chi Tiết Sản Phẩm - AquaPrint 3D</title>
     <meta name="description" content="Chi tiết sản phẩm phụ kiện thủy sinh in 3D từ AquaPrint 3D.">
     <link rel="stylesheet" href="css/style.css">
@@ -12,13 +13,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 </head>
-<body>
+<body class="has-sticky-cta">
+
+    <!-- Scroll Progress Bar -->
+    <div id="scrollProgress" class="scroll-progress"></div>
 
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container navbar-container">
             <a href="index.html" class="logo">AquaPrint <span class="accent-text">3D</span></a>
-            <button class="menu-toggle" aria-label="Toggle navigation">
+            <button class="menu-toggle" aria-label="Mở menu" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
             <ul class="nav-links">
@@ -26,7 +30,7 @@
                 <li><a href="index.html#features">Tính Năng</a></li>
                 <li><a href="index.html#gallery">Thư Viện</a></li>
                 <li><a href="index.html#contact">Liên Hệ</a></li>
-                <li><a href="index.html#products" class="btn-nav">Mua Ngay</a></li>
+                <li><a href="index.html#contact" class="btn-nav">Mua Ngay</a></li>
             </ul>
         </div>
     </nav>
@@ -36,23 +40,61 @@
         <div class="container">
             <div class="product-detail-wrapper">
                 <div class="product-detail-image">
-                    <img id="detail-image" src="" alt="Hình ảnh sản phẩm">
+                    <div class="detail-image-frame" id="detail-image-frame" role="button" tabindex="0" aria-label="Xem ảnh phóng to">
+                        <img id="detail-image" src="" alt="Hình ảnh sản phẩm">
+                    </div>
                 </div>
                 <div class="product-detail-info">
                     <a href="index.html#products" class="back-link"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
-                    <h1 id="detail-name">Tên Sản Phẩm</h1>
-                    <span id="detail-price" class="price-large">0₫</span>
+                    <span id="detail-category-badge" class="category-badge" style="display:none;"></span>
+                    <h1 id="detail-name">Đang tải...</h1>
+                    <span id="detail-price" class="price-large">—</span>
                     <div class="divider"></div>
                     <p id="detail-description">Mô tả chi tiết sản phẩm đang được cập nhật.</p>
-                    
-                    <ul class="product-specs">
+
+                    <ul id="detail-specs" class="product-specs">
                         <li><i class="fas fa-cube"></i> <strong>Chất liệu:</strong> Nhựa PETG an toàn thực phẩm</li>
                         <li><i class="fas fa-layer-group"></i> <strong>Công nghệ:</strong> In 3D độ phân giải cao</li>
                         <li><i class="fas fa-water"></i> <strong>Độ bền:</strong> Không phai màu, không rã trong nước</li>
                     </ul>
 
+                    <!-- Discount Tier Banner -->
+                    <div class="discount-tiers">
+                        <i class="fas fa-tags"></i>
+                        <div>
+                            <strong>Mua nhiều giảm giá</strong>
+                            <span>Mua từ <strong>5 cái</strong>: giảm <strong>5.000₫/cái</strong> · Mua từ <strong>10 cái</strong>: giảm <strong>10.000₫/cái</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Quantity & Pricing -->
+                    <div class="qty-section">
+                        <div class="qty-row">
+                            <label for="detail-qty">Số lượng</label>
+                            <div class="qty-control">
+                                <button id="detail-qty-minus" type="button" aria-label="Giảm">−</button>
+                                <input id="detail-qty" type="number" min="1" max="99" value="1" inputmode="numeric">
+                                <button id="detail-qty-plus" type="button" aria-label="Tăng">+</button>
+                            </div>
+                        </div>
+                        <div class="qty-pricing">
+                            <div class="qty-unit-price" id="detail-unit-price"></div>
+                            <div class="qty-total-row">
+                                <span class="qty-total-label">Tổng tiền</span>
+                                <span class="qty-total" id="detail-total">—</span>
+                            </div>
+                            <div class="qty-saved" id="detail-saved" style="display:none;"></div>
+                            <div class="qty-next-hint" id="detail-next-hint"></div>
+                        </div>
+                    </div>
+
                     <div class="cta-actions">
-                        <a href="index.html#contact" class="btn btn-primary btn-block">Liên Hệ Đặt Hàng</a>
+                        <a id="detail-zalo-btn" href="https://zalo.me/0333255600" target="_blank" rel="noopener" class="btn btn-primary btn-block">
+                            <i class="fas fa-comment-dots"></i> Đặt Hàng Qua Zalo
+                        </a>
+                        <a href="https://www.facebook.com/tan.hai.668270" target="_blank" rel="noopener" class="btn btn-secondary btn-block">
+                            <i class="fab fa-facebook-messenger"></i> Nhắn Facebook
+                        </a>
                     </div>
                 </div>
             </div>
@@ -65,12 +107,25 @@
             <a href="index.html" class="logo footer-logo">AquaPrint <span class="accent-text">3D</span></a>
             <p>&copy; 2025 AquaPrint 3D. Đã đăng ký bản quyền.</p>
             <div class="social-links">
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.facebook.com/tan.hai.668270" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://zalo.me/0333255600" target="_blank" rel="noopener" aria-label="Zalo"><i class="fas fa-comment-dots"></i></a>
+                <a href="tel:0333255600" aria-label="Gọi điện"><i class="fas fa-phone"></i></a>
             </div>
         </div>
     </footer>
+
+    <!-- Sticky Bottom CTA (mobile-friendly) -->
+    <div class="sticky-cta">
+        <a href="tel:0333255600" class="sticky-cta-btn sticky-cta-call" aria-label="Gọi điện">
+            <i class="fas fa-phone"></i>
+        </a>
+        <a id="sticky-zalo-btn" href="https://zalo.me/0333255600" target="_blank" rel="noopener" class="sticky-cta-btn sticky-cta-zalo">
+            <i class="fas fa-comment-dots"></i> Đặt Zalo Ngay
+        </a>
+        <a href="https://www.facebook.com/tan.hai.668270" target="_blank" rel="noopener" class="sticky-cta-btn sticky-cta-fb" aria-label="Messenger">
+            <i class="fab fa-facebook-messenger"></i>
+        </a>
+    </div>
 
     <script src="js/main.js"></script>
 </body>

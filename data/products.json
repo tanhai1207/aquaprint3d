@@ -1,0 +1,134 @@
+{
+  "categories": [
+    { "id": "shrimp_cave", "name": "Hang Tép", "icon": "fa-shrimp" },
+    { "id": "pleco_cave", "name": "Hang Pleco", "icon": "fa-fish" },
+    { "id": "accessory", "name": "Phụ Kiện Thủy Sinh", "icon": "fa-leaf" }
+  ],
+  "products": [
+    {
+      "id": "shrimp_cave",
+      "category": "shrimp_cave",
+      "name": "Hang Trú Ẩn Cho Tép",
+      "price": 75000,
+      "priceDisplay": "75.000₫",
+      "shortDescription": "Hang khe đứng nhiều ngăn cho tép trú ẩn, hỗ trợ sinh sản và tép con lột vỏ an toàn.",
+      "description": "Hang trú ẩn được thiết kế chuyên biệt cho các loài tép cảnh (Tép Sula, Tép màu, Tép Lạnh). Thiết kế dạng hộp với các thanh dọc giúp tối ưu hóa diện tích bề mặt cho vi sinh phát triển, đồng thời cung cấp nơi trú ẩn an toàn cho tép con và tép mới lột vỏ. Sản phẩm chìm ngay trong nước, không cần ngâm xử lý.",
+      "image": "assets/images/shrimp_caves/shrimp_cave_pink.jpg",
+      "images": [
+        "assets/images/shrimp_caves/hang_doc_den.jpg",
+        "assets/images/shrimp_caves/hang_doc_do.jpg",
+        "assets/images/shrimp_caves/shrimp_cave_black.jpg",
+        "assets/images/shrimp_caves/shrimp_cave_red.jpg"
+      ],
+      "specs": [
+        "Kích thước: 13cm x 5cm x 5.5cm",
+        "Chất liệu: Nhựa PETG an toàn",
+        "Màu sắc: Hồng, Đen, Đỏ, Đỏ Đậm"
+      ]
+    },
+    {
+      "id": "round_cave",
+      "category": "shrimp_cave",
+      "name": "Hang Tép Tròn",
+      "price": 50000,
+      "priceDisplay": "50.000₫",
+      "shortDescription": "Cụm hang dạng cầu rỗng với nhiều lỗ thông, tạo không gian sinh sống đa chiều cho tép.",
+      "description": "Hang tép tròn in 3D độc đáo với cấu trúc dạng cụm cầu rỗng nhiều tầng. Các lỗ thông rộng giúp dòng nước lưu thông tốt, đồng thời tạo không gian ba chiều cho tép trú ẩn, kiếm ăn và lột vỏ. Bề mặt nhám tự nhiên giúp vi sinh và rêu non bám phát triển — nguồn thức ăn lý tưởng cho tép. Thiết kế chìm trong nước, không cần ngâm xử lý.",
+      "image": "assets/images/shrimp_caves/hang_tron.jpg",
+      "images": [
+        "assets/images/shrimp_caves/hang_tron.jpg"
+      ],
+      "specs": [
+        "Kích thước: 7cm x 6cm",
+        "Chất liệu: Nhựa PETG an toàn",
+        "Màu sắc: Đen (Đỏ - sắp có)"
+      ]
+    },
+    {
+      "id": "honeycomb_cave",
+      "category": "shrimp_cave",
+      "name": "Hang Tép Tổ Ong",
+      "price": 85000,
+      "priceDisplay": "85.000₫",
+      "shortDescription": "Cấu trúc tổ ong nhiều lỗ lục giác — tối đa số chỗ trú ẩn cho đàn tép sinh sản.",
+      "description": "Hang tép kiểu tổ ong với hàng chục lỗ lục giác kích thước chuẩn 1.5cm — phù hợp cho các loài tép cảnh. Thiết kế tổ ong giúp tối đa hóa số lượng chỗ trú ẩn trên cùng một diện tích, lý tưởng cho bể có đàn tép đông hoặc đang trong giai đoạn sinh sản. Bề mặt rộng tạo điều kiện cho vi sinh phát triển mạnh.",
+      "image": "assets/images/shrimp_caves/to_ong.jpg",
+      "images": [
+        "assets/images/shrimp_caves/to_ong.jpg"
+      ],
+      "specs": [
+        "Kích thước ngoài: 14cm x 4.5cm x 7cm",
+        "Lỗ tổ ong: 1.5cm",
+        "Chất liệu: Nhựa PETG an toàn",
+        "Màu sắc: Đen (Đỏ - sắp có)"
+      ]
+    },
+    {
+      "id": "pleco_shelter",
+      "category": "pleco_cave",
+      "name": "Hang Trú Ẩn Cho Cá Pleco",
+      "price": 100000,
+      "priceDisplay": "100.000₫",
+      "shortDescription": "Hang đa tầng 16 ô với khe ngang rộng — không gian trú ẩn lý tưởng cho cá Pleco.",
+      "description": "Hang trú ẩn dạng kệ đa tầng với 16 ô vuông được sắp xếp khoa học, mỗi ô có kích thước 3.5cm x 1.5cm vừa đủ cho các loài cá Pleco nhỏ và vừa (Ancistrus, Bristlenose...) trú ẩn thoải mái. Thiết kế dạng kệ giúp dòng nước lưu thông qua các ô, đảm bảo môi trường sạch và oxy đầy đủ. Bề mặt phẳng phía trên có thể đặt cây thủy sinh hoặc rêu để trang trí.",
+      "image": "assets/images/pleco_caves/pleco.jpg",
+      "images": [
+        "assets/images/pleco_caves/pleco.jpg"
+      ],
+      "specs": [
+        "Kích thước ngoài: 15.5cm x 6.5cm x 6.5cm",
+        "Kích thước lỗ: 3.5cm x 1.5cm (16 ô)",
+        "Chất liệu: Nhựa PETG an toàn",
+        "Màu sắc: Trắng (Đen - sắp có)"
+      ]
+    },
+    {
+      "id": "pleco_cave",
+      "category": "pleco_cave",
+      "name": "Hang Sinh Sản Pleco",
+      "price": 50000,
+      "priceDisplay": "50.000₫",
+      "shortDescription": "Hang có lòng nhẵn mịn được thiết kế đặc biệt cho các cặp cá Pleco và Ancistrus sinh sản.",
+      "description": "Hang gốm giả (Terracotta style) in 3D với độ hoàn thiện cao. Bề mặt trong nhẵn mịn bảo vệ da cá, thiết kế kín một đầu tạo cảm giác an toàn tuyệt đối cho các dòng cá Pleco (Cá lau kính), Ancistrus sinh sản. Độ bền vĩnh cửu, không phai màu theo thời gian.",
+      "image": "assets/images/pleco_caves/pleco_cave.png",
+      "images": ["assets/images/pleco_caves/pleco_cave.png"],
+      "specs": [
+        "Kích thước: 15cm x 5cm",
+        "Chất liệu: Nhựa PETG an toàn",
+        "Màu sắc: Xám đậm"
+      ]
+    },
+    {
+      "id": "moss_ledge",
+      "category": "accessory",
+      "name": "Giá Đỡ Rêu / Cây Thủy Sinh",
+      "price": 120000,
+      "priceDisplay": "120.000₫",
+      "shortDescription": "Dễ dàng gắn rêu hoặc bucephalandra với giá đỡ gắn cốc hút tiện lợi này.",
+      "description": "Giải pháp tuyệt vời để tạo mảng xanh trên thành bể kính. Giá đỡ in 3D với thiết kế lưới giúp dễ dàng cột hoặc dán các loại rêu (Java, Christmas, Taiwan...) hoặc Bucephalandra. Đi kèm giác hút chất lượng cao, chịu lực tốt.",
+      "image": "assets/images/accessories/moss_ledge.png",
+      "images": ["assets/images/accessories/moss_ledge.png"],
+      "specs": [
+        "Bộ sản phẩm: 1 Giá đỡ in 3D + 2 Giác hút + 1m dây cước",
+        "Chất liệu: Nhựa PETG an toàn",
+        "Phụ kiện: Giác hút chịu lực cao"
+      ]
+    },
+    {
+      "id": "filter_guard",
+      "category": "accessory",
+      "name": "Đầu Bảo Vệ Hút Lọc",
+      "price": 30000,
+      "priceDisplay": "30.000₫",
+      "shortDescription": "Bảo vệ tép con khỏi luồng hút mạnh của máy lọc mà không làm giảm hiệu quả lọc.",
+      "description": "Đừng để tép con của bạn bị hút vào máy lọc! Đầu bảo vệ in 3D với mắt lưới siêu nhỏ đảm bảo dòng chảy thông thoáng nhưng ngăn chặn hiệu quả tôm, tép và cá con. Tương thích với các loại ống In-Out phổ biến (12mm, 16mm). Dễ dàng tháo lắp và vệ sinh.",
+      "image": "assets/images/accessories/filter_guard.png",
+      "images": ["assets/images/accessories/filter_guard.png"],
+      "specs": [
+        "Tương thích ống: 12mm, 16mm",
+        "Chất liệu: Nhựa PETG an toàn",
+        "Đặc điểm: Mắt lưới siêu nhỏ, dễ tháo lắp"
+      ]
+    }
+  ]
+}
