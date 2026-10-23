@@ -12,6 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <script>
+        (function (r) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            r.classList.add('js-motion');
+            setTimeout(function () { if (!window.gsap) r.classList.remove('js-motion'); }, 2500);
+        })(document.documentElement);
+    </script>
 </head>
 <body>
 
@@ -36,19 +43,32 @@
     </nav>
 
     <!-- Hero Section -->
-    <header class="hero">
+    <header class="hero" id="top">
+        <div class="hero-bg" aria-hidden="true">
+            <div class="hero-glow hero-glow-1"></div>
+            <div class="hero-glow hero-glow-2"></div>
+            <div class="hero-glow hero-glow-3"></div>
+            <div class="hero-rays"></div>
+            <div class="bubbles hero-bubbles"></div>
+        </div>
         <div class="container hero-container">
-            <div class="hero-content">
+            <div class="hero-content" data-hero-hide>
+                <span class="hero-eyebrow"><i class="fas fa-cube"></i> In 3D từ nhựa PETG an toàn</span>
                 <h1>Mang công nghệ vào thế giới thủy sinh của bạn</h1>
                 <p>Phụ kiện in 3D an toàn, bền bỉ và đẹp mắt cho bể cá và tép cảnh. Được tạo ra bởi người chơi thủy sinh, dành cho người chơi thủy sinh.</p>
                 <div class="hero-buttons">
-                    <a href="#products" class="btn btn-primary">Xem Bộ Sưu Tập</a>
+                    <a href="#products" class="btn btn-primary">Xem Bộ Sưu Tập <i class="fas fa-arrow-down"></i></a>
                     <a href="#contact" class="btn btn-outline">Đặt Hàng Riêng</a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="assets/images/hero2.jpg" alt="Hang in 3D cho bể cá với cây thủy sinh" loading="lazy">
+            <div class="hero-image" data-hero-hide>
+                <img src="assets/images/hero2.jpg" alt="Hang in 3D cho bể cá với cây thủy sinh" fetchpriority="high">
+                <span class="hero-image-shine" aria-hidden="true"></span>
             </div>
+        </div>
+        <div class="hero-wave" aria-hidden="true">
+            <svg class="wave wave-back" viewBox="0 0 2880 100" preserveAspectRatio="none"><path d="M0,60 Q360,20 720,60 T1440,60 T2160,60 T2880,60 V100 H0 Z"/></svg>
+            <svg class="wave wave-front" viewBox="0 0 2880 100" preserveAspectRatio="none"><path d="M0,50 Q360,0 720,50 T1440,50 T2160,50 T2880,50 V100 H0 Z"/></svg>
         </div>
     </header>
 
@@ -63,12 +83,19 @@
             <!-- Category Tabs -->
             <div id="categoryTabs" class="category-tabs" role="tablist">
                 <!-- Tabs render từ JSON -->
+                <span class="skeleton skeleton-tab"></span>
+                <span class="skeleton skeleton-tab"></span>
+                <span class="skeleton skeleton-tab"></span>
             </div>
 
             <div id="productGrid" class="product-grid">
                 <!-- Sản phẩm được render từ data/products.json -->
+                <div class="skeleton-card" aria-hidden="true"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-line w-60"></div><div class="skeleton skeleton-line w-90"></div><div class="skeleton skeleton-line w-40"></div></div>
+                <div class="skeleton-card" aria-hidden="true"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-line w-60"></div><div class="skeleton skeleton-line w-90"></div><div class="skeleton skeleton-line w-40"></div></div>
+                <div class="skeleton-card" aria-hidden="true"><div class="skeleton skeleton-img"></div><div class="skeleton skeleton-line w-60"></div><div class="skeleton skeleton-line w-90"></div><div class="skeleton skeleton-line w-40"></div></div>
             </div>
         </div>
+        <div class="section-wave wave-to-soft" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C320,90 640,0 960,30 C1180,50 1320,70 1440,40 V80 H0 Z"/></svg></div>
     </section>
 
     <!-- Features Section -->
@@ -100,6 +127,7 @@
                 </div>
             </div>
         </div>
+        <div class="section-wave wave-to-white" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C320,90 640,0 960,30 C1180,50 1320,70 1440,40 V80 H0 Z"/></svg></div>
     </section>
 
     <!-- Gallery Section -->
@@ -110,16 +138,18 @@
                 <p>Xem sản phẩm của AquaPrint3D trong các bể thủy sinh thực tế.</p>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item"><img src="assets/images/gallery/gallery_community.png" alt="Bể Cộng Đồng" loading="lazy"></div>
-                <div class="gallery-item"><img src="assets/images/gallery/gallery_shrimp.png" alt="Đàn Tép" loading="lazy"></div>
-                <div class="gallery-item"><img src="assets/images/gallery/gallery_betta.png" alt="Bể Cá Betta" loading="lazy"></div>
-                <div class="gallery-item"><img src="assets/images/gallery/gallery_hightech.png" alt="Bể Thủy Sinh Công Nghệ Cao" loading="lazy"></div>
+                <figure class="gallery-item"><img src="assets/images/gallery/gallery_community.png" alt="Bể Cộng Đồng" loading="lazy"><figcaption><i class="fas fa-expand"></i> Bể Cộng Đồng</figcaption></figure>
+                <figure class="gallery-item"><img src="assets/images/gallery/gallery_shrimp.png" alt="Đàn Tép" loading="lazy"><figcaption><i class="fas fa-expand"></i> Đàn Tép</figcaption></figure>
+                <figure class="gallery-item"><img src="assets/images/gallery/gallery_betta.png" alt="Bể Cá Betta" loading="lazy"><figcaption><i class="fas fa-expand"></i> Bể Cá Betta</figcaption></figure>
+                <figure class="gallery-item"><img src="assets/images/gallery/gallery_hightech.png" alt="Bể Thủy Sinh Công Nghệ Cao" loading="lazy"><figcaption><i class="fas fa-expand"></i> Bể Thủy Sinh Công Nghệ Cao</figcaption></figure>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="section contact">
+        <div class="section-wave wave-top wave-to-white" aria-hidden="true"><svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C320,90 640,0 960,30 C1180,50 1320,70 1440,40 V80 H0 Z"/></svg></div>
+        <div class="bubbles contact-bubbles" aria-hidden="true"></div>
         <div class="container">
             <div class="section-header">
                 <h2>Liên Hệ Đặt Hàng</h2>
@@ -180,6 +210,10 @@
         </a>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

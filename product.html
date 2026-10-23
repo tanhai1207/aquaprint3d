@@ -12,6 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <script>
+        (function (r) {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            r.classList.add('js-motion');
+            setTimeout(function () { if (!window.gsap) r.classList.remove('js-motion'); }, 2500);
+        })(document.documentElement);
+    </script>
 </head>
 <body class="has-sticky-cta">
 
@@ -42,9 +49,20 @@
                 <div class="product-detail-image">
                     <div class="detail-image-frame" id="detail-image-frame" role="button" tabindex="0" aria-label="Xem ảnh phóng to">
                         <img id="detail-image" src="" alt="Hình ảnh sản phẩm">
+                        <script>
+                            // Cùng ảnh với card vừa click → View Transition có ảnh để "bay" sang ngay lần render đầu
+                            (function () {
+                                try {
+                                    var d = JSON.parse(sessionStorage.getItem('ap3d-vt') || 'null');
+                                    if (d && d.id === new URLSearchParams(location.search).get('id')) {
+                                        document.getElementById('detail-image').src = d.src;
+                                    }
+                                } catch (e) {}
+                            })();
+                        </script>
                     </div>
                 </div>
-                <div class="product-detail-info">
+                <div class="product-detail-info" data-hero-hide>
                     <a href="index.html#products" class="back-link"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
                     <span id="detail-category-badge" class="category-badge" style="display:none;"></span>
                     <h1 id="detail-name">Đang tải...</h1>
@@ -127,6 +145,10 @@
         </a>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
