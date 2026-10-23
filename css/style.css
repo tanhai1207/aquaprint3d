@@ -149,9 +149,7 @@ button { font-family: inherit; }
    Navbar
    ========================================= */
 .navbar {
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.98);
   height: 70px;
   display: flex;
   align-items: center;
@@ -159,14 +157,14 @@ button { font-family: inherit; }
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-  transition: height var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), transform var(--dur-3) var(--ease-out);
+  transition: box-shadow var(--dur-2) var(--ease-out), transform var(--dur-3) var(--ease-out);
   view-transition-name: navbar;
+  will-change: transform;
 }
 
 .navbar.nav-hidden { transform: translateY(-100%); }
 
 .navbar.scrolled {
-  height: 60px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
@@ -236,6 +234,7 @@ button { font-family: inherit; }
   color: var(--white);
   padding: 80px 0;
   min-height: 88vh;
+  min-height: 88svh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -276,8 +275,6 @@ button { font-family: inherit; }
   color: var(--accent-color);
   background-color: rgba(122, 229, 130, 0.1);
   border: 1px solid rgba(122, 229, 130, 0.3);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 .hero-content h1 {
@@ -419,8 +416,6 @@ button { font-family: inherit; }
   gap: 5px;
   padding: 5px 11px;
   background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   color: var(--primary-color);
   font-size: 0.72rem;
   font-weight: 700;
@@ -494,8 +489,7 @@ button { font-family: inherit; }
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgba(255, 255, 255, 0.55), transparent 55%);
-  mix-blend-mode: soft-light;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgba(255, 255, 255, 0.22), transparent 55%);
   opacity: 0;
   transition: opacity var(--dur-3) var(--ease-out);
   z-index: 2;
@@ -1679,21 +1673,20 @@ html.lenis, html.lenis body { height: auto; }
   background: repeating-linear-gradient(
     100deg,
     transparent 0 60px,
-    rgba(255, 255, 255, 0.05) 60px 90px,
+    rgba(255, 255, 255, 0.06) 60px 90px,
     transparent 90px 170px,
-    rgba(255, 255, 255, 0.035) 170px 185px
+    rgba(255, 255, 255, 0.04) 170px 185px
   );
   mask-image: linear-gradient(to bottom, black 0%, transparent 70%);
   -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 70%);
   transform-origin: top center;
   animation: raysSway 14s var(--ease-in-out) infinite alternate;
-  mix-blend-mode: screen;
+  will-change: transform;
 }
 
 @keyframes raysSway {
-  0% { transform: skewX(-6deg) translateX(-2%); opacity: 0.7; }
-  50% { opacity: 1; }
-  100% { transform: skewX(6deg) translateX(2%); opacity: 0.6; }
+  0% { transform: skewX(-6deg) translateX(-2%); }
+  100% { transform: skewX(6deg) translateX(2%); }
 }
 
 /* Bọt khí */
@@ -1702,8 +1695,6 @@ html.lenis, html.lenis body { height: auto; }
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  mask-image: linear-gradient(to top, black 30%, transparent 95%);
-  -webkit-mask-image: linear-gradient(to top, black 30%, transparent 95%);
 }
 
 .bubble {
@@ -1897,6 +1888,8 @@ html.lenis, html.lenis body { height: auto; }
 ::view-transition-group(navbar) { animation-duration: 0.4s; }
 
 @media (max-width: 768px) {
+  .hero-rays, .hero-image-shine, .hero-glow-3 { display: none; }
+  .wave-back { animation: none; }
   .section-wave { height: 36px; }
   .products, .features { padding-bottom: 84px; }
   .hero-wave { height: 70px; }

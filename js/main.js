@@ -57,13 +57,17 @@ if (HAS_GSAP) {
   gsap.registerPlugin(...[window.ScrollTrigger, window.Flip].filter(Boolean));
   document.documentElement.classList.add('has-gsap');
 }
+// Thanh địa chỉ mobile co/giãn → không refresh lại toàn bộ ScrollTrigger (gây giật/nhảy)
+if (HAS_ST) ScrollTrigger.config({ ignoreMobileResize: true });
+
+const IS_SMALL = window.matchMedia('(max-width: 768px)').matches;
 if (!MOTION) document.documentElement.classList.remove('js-motion');
 
 let lenis = null;
 
 function initLenis() {
   if (!MOTION || typeof window.Lenis === 'undefined') return;
-  lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1 });
+  lenis = new Lenis({ lerp: 0.12, wheelMultiplier: 1 });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(time => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
@@ -77,6 +81,13 @@ function scrollToTarget(target, immediate = false) {
   }
   const top = target === 0 ? 0 : target.getBoundingClientRect().top + window.pageYOffset + offset;
   window.scrollTo({ top, behavior: immediate ? 'auto' : 'smooth' });
+}
+
+/** Tắt CSS transition (transform/opacity) trong lúc GSAP chạy để hai bên không "giành" nhau */
+function lockTransitions(targets) {
+  const els = gsap.utils.toArray(targets);
+  els.forEach(el => el.classList.add('gsap-driven'));
+  return () => els.forEach(el => el.classList.remove('gsap-driven'));
 }
 
 /** Tách chữ thành từng từ để animate, giữ nguyên nội dung cho screen reader */
@@ -196,7 +207,10 @@ function renderCategoryTabs() {
   tabsEl.querySelectorAll('.category-tab').forEach(btn => {
     btn.addEventListener('click', () => {
       const cat = btn.dataset.category;
-      if (MOTION) gsap.fromTo(btn, { scale: 0.94 }, { scale: 1, duration: 0.5, ease: 'back.out(3)', clearProps: 'transform' });
+      if (MOTION) {
+        const unlock = lockTransitions(btn);
+        gsap.fromTo(btn, { scale: 0.94 }, { scale: 1, duration: 0.5, ease: 'back.out(3)', clearProps: 'transform', onComplete: unlock });
+      }
       if (cat === activeCategory) return;
       activeCategory = cat;
       tabsEl.querySelectorAll('.category-tab').forEach(b => b.classList.toggle('active', b.dataset.category === cat));
@@ -239,8 +253,8 @@ function renderProductGrid() {
       <article class="product-card" data-category="${p.category}" data-id="${p.id}">
         <div class="product-card-inner">
           <a href="product.html?id=${p.id}" class="product-image" aria-label="${p.name}">
-            <img class="product-img-main" src="${p.image}" alt="${p.name}" loading="lazy">
-            ${altImg ? `<img class="product-img-alt" src="${altImg}" alt="" aria-hidden="true" loading="lazy">` : ''}
+            <img class="product-img-main" src="${p.image}" alt="${p.name}" loading="lazy" decoding="async">
+            ${altImg ? `<img class="product-img-alt" src="${altImg}" alt="" aria-hidden="true" loading="lazy" decoding="async">` : ''}
             ${cat ? `<span class="product-badge"><i class="fas ${cat.icon}"></i> ${cat.name}</span>` : ''}
           </a>
           <div class="product-info">
@@ -266,13 +280,13 @@ function renderProductGrid() {
   initCardViewTransition(grid);
 
   if (MOTION) {
-    gsap.set(cards, { autoAlpha: 0, y: 60 });
+    gsap.set(cards, { autoAlpha: 0, y: 40 });
     cardRevealTriggers = ScrollTrigger.batch(cards, {
-      start: 'top 92%',
+      start: 'top 95%',
       once: true,
       onEnter: batch => {
         batch.forEach(el => { el.dataset.revealed = '1'; });
-        gsap.to(batch, { autoAlpha: 1, y: 0, duration: 1.1, stagger: 0.1, ease: EASE, overwrite: true });
+        gsap.to(batch, { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out', overwrite: true });
       }
     });
   }
@@ -449,7 +463,8 @@ function renderProductDetail() {
     });
     imageContainer.appendChild(thumbs);
     if (MOTION) {
-      gsap.from(thumbs.children, { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.06, delay: 0.35, ease: EASE });
+      const unlock = lockTransitions(thumbs.children);
+      gsap.from(thumbs.children, { y: 16, autoAlpha: 0, duration: 0.6, stagger: 0.06, delay: 0.35, ease: EASE, onComplete: unlock });
     }
   }
 
@@ -473,11 +488,11 @@ function swapDetailImage(imgEl, src) {
 function animateDetailEntrance(info) {
   if (!info) return;
   if (!MOTION) return;
-  gsap.timeline({ defaults: { ease: EASE } })
+  const parts = [...info.children].filter(el => el.offsetParent !== null);
+  const unlock = lockTransitions(parts);
+  gsap.timeline({ defaults: { ease: EASE }, onComplete: unlock })
     .set(info, { autoAlpha: 1 })
-    .from([...info.children].filter(el => el.offsetParent !== null), {
-      y: 30, autoAlpha: 0, duration: 0.9, stagger: 0.07
-    });
+    .from(parts, { y: 30, autoAlpha: 0, duration: 0.9, stagger: 0.07 });
 
   const sticky = document.querySelector('.sticky-cta');
   if (sticky && getComputedStyle(sticky).display !== 'none') {
@@ -582,7 +597,8 @@ function initQuantityControls(product, zaloBtn, stickyZalo) {
 
   const bump = (btn, dir) => {
     if (!MOTION) return;
-    gsap.fromTo(btn, { scale: 0.8 }, { scale: 1, duration: 0.45, ease: 'back.out(4)' });
+    btn.classList.add('gsap-driven');
+    gsap.fromTo(btn, { scale: 0.8 }, { scale: 1, duration: 0.45, ease: 'back.out(4)', clearProps: 'transform' });
     gsap.fromTo(qtyInput, { yPercent: dir * 45, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.35, ease: 'power3.out' });
   };
 
@@ -813,7 +829,7 @@ function initHero() {
     hero.addEventListener('pointerleave', () => { rx(0); ry(0); gx(0); gy(0); });
   }
 
-  initBubbles(hero.querySelector('.hero-bubbles'), window.innerWidth < 768 ? 12 : 22, hero);
+  initBubbles(hero.querySelector('.hero-bubbles'), IS_SMALL ? 8 : 18, hero);
 }
 
 /** Bọt khí nổi lên, lắc lư; tạm dừng khi section ra khỏi màn hình */
@@ -827,13 +843,14 @@ function initBubbles(container, count, trigger) {
     b.className = 'bubble';
     b.style.width = b.style.height = `${size}px`;
     b.style.left = `${gsap.utils.random(0, 100)}%`;
-    b.style.opacity = gsap.utils.random(0.35, 0.9);
     container.appendChild(b);
 
+    const o = gsap.utils.random(0.35, 0.9);
     const duration = gsap.utils.random(7, 15) * (size > 12 ? 0.8 : 1);
-    const rise = gsap.fromTo(b,
-      { y: 0 },
-      { y: () => -(container.offsetHeight + 60), duration, ease: 'none', repeat: -1 });
+    const rise = gsap.to(b, {
+      keyframes: { y: [0, -(container.offsetHeight + 60)], opacity: [0, o, o, 0], easeEach: 'none' },
+      duration, ease: 'none', repeat: -1
+    });
     rise.totalTime(Math.random() * duration);
     const wobble = gsap.to(b, {
       x: gsap.utils.random(-24, 24),
@@ -870,10 +887,10 @@ function initSectionHeaders() {
     const len = path.getTotalLength();
     gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
 
-    const tl = gsap.timeline({ scrollTrigger: { trigger: header, start: 'top 85%', once: true } })
-      .from(words, { yPercent: 115, duration: 1.1, stagger: 0.05, ease: EASE })
-      .to(path, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' }, 0.3);
-    if (p) tl.from(p, { y: 18, autoAlpha: 0, duration: 0.9, ease: EASE }, 0.35);
+    const tl = gsap.timeline({ scrollTrigger: { trigger: header, start: 'top 90%', once: true } })
+      .from(words, { yPercent: 115, duration: 0.9, stagger: 0.045, ease: EASE })
+      .to(path, { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }, 0.25);
+    if (p) tl.from(p, { y: 18, autoAlpha: 0, duration: 0.7, ease: 'power3.out' }, 0.3);
   });
 }
 
@@ -882,12 +899,12 @@ function batchReveal(targets, { y = 50, onEnter } = {}) {
   if (!els.length) return;
   gsap.set(els, { autoAlpha: 0, y });
   ScrollTrigger.batch(els, {
-    start: 'top 90%',
+    start: 'top 95%',
     once: true,
     onEnter: batch => {
       batch.forEach(el => el.classList.add('gsap-driven'));
       gsap.to(batch, {
-        autoAlpha: 1, y: 0, duration: 1.1, stagger: 0.12, ease: EASE, overwrite: true,
+        autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out', overwrite: true,
         clearProps: 'transform',
         onComplete: () => batch.forEach(el => el.classList.remove('gsap-driven'))
       });
@@ -900,12 +917,12 @@ function initReveals() {
   if (!MOTION) return;
 
   batchReveal('.feature-item', {
-    y: 60,
+    y: 40,
     onEnter: batch => {
       const icons = batch.map(el => el.querySelector('i')).filter(Boolean);
       icons.forEach(i => i.classList.add('gsap-driven'));
       gsap.from(icons, {
-        scale: 0, rotation: -60, duration: 0.9, stagger: 0.12, delay: 0.25, ease: 'back.out(2.2)',
+        scale: 0, rotation: -60, duration: 0.7, stagger: 0.08, delay: 0.15, ease: 'back.out(2.2)',
         clearProps: 'transform',
         onComplete: () => icons.forEach(i => i.classList.remove('gsap-driven'))
       });
@@ -913,14 +930,14 @@ function initReveals() {
   });
   batchReveal('.contact-cta-card', { y: 40 });
 
-  // Gallery: mở màn bằng clip-path + ảnh thu nhỏ dần về đúng tỉ lệ
+  // Gallery: chỉ dùng transform/opacity (clip-path buộc vẽ lại ảnh lớn mỗi frame)
   gsap.utils.toArray('.gallery-item').forEach((item, i) => {
     const img = item.querySelector('img');
-    gsap.timeline({ scrollTrigger: { trigger: item, start: 'top 90%', once: true }, delay: (i % 2) * 0.12 })
+    gsap.timeline({ scrollTrigger: { trigger: item, start: 'top 95%', once: true }, delay: (i % 2) * 0.1 })
       .fromTo(item,
-        { clipPath: 'inset(16% 16% 16% 16% round 28px)', autoAlpha: 0 },
-        { clipPath: 'inset(0% 0% 0% 0% round 16px)', autoAlpha: 1, duration: 1.4, ease: 'expo.inOut', clearProps: 'clipPath' })
-      .fromTo(img, { scale: 1.35 }, { scale: 1, duration: 1.8, ease: EASE, clearProps: 'transform' }, 0);
+        { autoAlpha: 0, y: 40, scale: 0.96 },
+        { autoAlpha: 1, y: 0, scale: 1, duration: 0.9, ease: 'power3.out', clearProps: 'transform' })
+      .fromTo(img, { scale: 1.2 }, { scale: 1, duration: 1.2, ease: EASE, clearProps: 'transform' }, 0);
   });
 
   const footer = document.querySelector('.footer-content');
@@ -931,7 +948,7 @@ function initReveals() {
     });
   }
 
-  initBubbles(document.querySelector('.contact-bubbles'), 10, document.querySelector('.contact'));
+  initBubbles(document.querySelector('.contact-bubbles'), IS_SMALL ? 5 : 10, document.querySelector('.contact'));
 }
 
 /* =========================================
@@ -1308,7 +1325,8 @@ const ImageViewer = (() => {
     sourceEl = source;
     sourceIndex = index;
     gsap.fromTo(lightbox, { backgroundColor: 'rgba(0,0,0,0)' }, { backgroundColor: 'rgba(0,0,0,0.94)', duration: 0.45, ease: 'power2.out' });
-    gsap.fromTo(chrome, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, delay: 0.25, stagger: 0.03 });
+    const unlock = lockTransitions(chrome);
+    gsap.fromTo(chrome, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, delay: 0.25, stagger: 0.03, onComplete: unlock });
 
     // Ảnh phóng ra từ đúng vị trí ảnh được click (FLIP)
     gsap.set(imgEl, { autoAlpha: 0 });
@@ -1345,7 +1363,8 @@ const ImageViewer = (() => {
 
     if (!MOTION) { finish(); return; }
 
-    gsap.to(chrome, { autoAlpha: 0, duration: 0.2 });
+    const unlock = lockTransitions(chrome);
+    gsap.to(chrome, { autoAlpha: 0, duration: 0.2, onComplete: unlock });
     gsap.to(lightbox, { backgroundColor: 'rgba(0,0,0,0)', duration: 0.5, ease: 'power2.inOut' });
 
     const canReturn = sourceEl && index === sourceIndex && scale <= 1.05;
