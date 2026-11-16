@@ -784,7 +784,7 @@ function initHero() {
     .from(words, { yPercent: 115, duration: 1.2, stagger: 0.055 }, 0.2)
     .from(hero.querySelector('.hero-content p'), { y: 24, autoAlpha: 0, duration: 1 }, 0.6)
     .from(hero.querySelectorAll('.hero-buttons .btn'), { y: 20, autoAlpha: 0, duration: 0.9, stagger: 0.1 }, 0.75)
-    .from(visual, { y: 80, scale: 0.9, rotationY: -14, autoAlpha: 0, duration: 1.5, transformPerspective: 1000 }, 0.25);
+    .from(visual, { y: 30, scale: 0.98, duration: 1.5 }, 0.25);
 
   // Ảnh nổi bồng bềnh (y) — độc lập với tilt (rotation) và parallax (yPercent)
   gsap.to(visual, { y: -16, duration: 3.2, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.75 });

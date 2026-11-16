@@ -260,7 +260,7 @@ button { font-family: inherit; }
   z-index: 1;
 }
 
-.hero-content { flex: 1; }
+.hero-content { flex: 1; min-width: 0; }
 
 .hero-eyebrow {
   display: inline-flex;
@@ -295,6 +295,9 @@ button { font-family: inherit; }
 
 .hero-image {
   flex: 1;
+  min-width: 0;
+  width: 100%;
+  aspect-ratio: 3 / 2;
   position: relative;
   border-radius: 20px;
   overflow: hidden;
@@ -302,7 +305,7 @@ button { font-family: inherit; }
   will-change: transform;
 }
 
-.hero-image img { width: 100%; height: auto; }
+.hero-image img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; }
 
 /* =========================================
    Split text (GSAP)
