@@ -19,7 +19,7 @@ function initHero() {
     .from(hero.querySelectorAll('.hero-buttons .btn'), { y: 20, autoAlpha: 0, duration: 0.9, stagger: 0.1 }, 0.75)
     .from(visual, { y: 30, scale: 0.98, duration: 1.5 }, 0.25);
 
-  // Ảnh nổi bồng bềnh (y) — độc lập với tilt (rotation) và parallax (yPercent)
+  // Hiệu ứng nổi của ảnh chạy độc lập với tilt.
   gsap.to(visual, { y: -16, duration: 3.2, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 1.75 });
 
   glows.forEach(g => {
@@ -33,11 +33,7 @@ function initHero() {
     });
   });
 
-  // Parallax khi cuộn qua hero
-  gsap.to(hero.querySelector('.hero-container'), {
-    yPercent: 14, opacity: 0.3, ease: 'none',
-    scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true }
-  });
+  // Parallax ở lớp nền để chữ, nút và ảnh luôn rõ khi cuộn.
   gsap.to(hero.querySelector('.hero-bg'), {
     yPercent: 22, ease: 'none',
     scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true }
