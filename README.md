@@ -1,74 +1,38 @@
-# AquaPrint 3D - Aquarium Accessories Landing Page
+# AquaPrint 3D
 
-A complete, responsive, static landing page for 3D-printed aquarium accessories.
+A Vietnamese storefront for 3D-printed aquarium accessories. Customers can browse
+by category, view product photos and bulk prices, and open Zalo with a prefilled
+order message.
 
-## Project Structure
+## Local development
 
-```
-/project-root
-  ├── index.html        # Main landing page
-  ├── css/
-  │   └── style.css     # Main stylesheet (variables, responsive design)
-  ├── js/
-  │   └── main.js       # Interaction logic (mobile menu, scroll, form)
-  └── assets/
-      └── images/       # Product and hero images
+Run this command from the repository root and open
+[http://localhost:8000](http://localhost:8000).
+
+```sh
+python3 -m http.server 8000
 ```
 
-## How to Run Locally
+The catalog loads over HTTP, and the browser runs native JavaScript modules.
+Run the regression tests with Node.js 22 or later.
 
-You can use Python's built-in HTTP server to run the project locally.
+```sh
+node --test
+```
 
-1. Open your terminal.
-2. Navigate to the project directory:
-   ```bash
-   cd /Users/hai.doan/Repo/3dshrimp
-   ```
-3. Start the server:
-   ```bash
-   python3 -m http.server 8000
-   ```
-4. Open your browser and go to: `http://localhost:8000`
+## Project structure
 
-## How to Deploy to Netlify
+- `index.html` contains the landing page, product catalog, gallery, and contact links.
+- `product.html?id=<product-id>` shows a product and calculates an order total.
+- `data/products.json` holds categories and products. Set each product's price
+  as an integer in VND and list its primary image in `image`. Add alternate
+  images in `images`. Product IDs appear in public URLs.
+- `js/main.js` starts the page. Catalog loading, pricing, product views,
+  navigation, animation, and the image viewer live in separate modules under
+  `js/`. Adjust volume discounts in `js/pricing.js`.
+- `css/style.css` contains the shared responsive styles, and `assets/` holds images.
 
-1. **Push to GitHub**:
+## Deployment
 
-   - Initialize a git repository: `git init`
-   - Add files: `git add .`
-   - Commit: `git commit -m "Initial commit"`
-   - Push to a new GitHub repository.
-
-2. **Connect to Netlify**:
-
-   - Log in to [Netlify](https://www.netlify.com/).
-   - Click **"Add new site"** > **"Import from an existing project"**.
-   - Select **GitHub**.
-   - Choose your `3dshrimp` repository.
-
-3. **Configure Build**:
-   - **Build command**: (Leave empty, this is a static site)
-   - **Publish directory**: `.` (Current directory)
-   - Click **"Deploy site"**.
-
-## Features
-
-- **Responsive Design**: Works on mobile, tablet, and desktop.
-- **Scroll Animations**: Elements fade in as you scroll.
-- **Smooth Navigation**: Clicking links scrolls smoothly to the section.
-- **Mobile Menu**: Hamburger menu for smaller screens.
-- **Contact Form**: Simulation of a working contact form with validation.
-
-## Technologies
-
-- HTML5 (Semantic)
-- CSS3 (Variables, Flexbox, Grid, Animations)
-- Vanilla JavaScript (ES6+)
-- Font Awesome (Icons)
-- Google Fonts (Inter, Playfair Display)
-
----
-
-© 2025 AquaPrint 3D
-# aquaprint3d
-# aquaprint3d
+Publish the repository root on a static host such as Netlify. Leave the build
+command empty and set the publish directory to `.`.

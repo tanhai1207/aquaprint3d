@@ -11,28 +11,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <script>
         (function (r) {
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
             r.classList.add('js-motion');
-            setTimeout(function () { if (!window.gsap) r.classList.remove('js-motion'); }, 2500);
+            setTimeout(function () { r.classList.remove('js-motion'); }, 2500);
         })(document.documentElement);
     </script>
 </head>
-<body class="has-sticky-cta">
+<body>
+
+    <a class="skip-link" href="#product-detail">Đến nội dung chính</a>
 
     <!-- Scroll Progress Bar -->
     <div id="scrollProgress" class="scroll-progress"></div>
 
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Điều hướng chính">
         <div class="container navbar-container">
             <a href="index.html" class="logo">AquaPrint <span class="accent-text">3D</span></a>
-            <button class="menu-toggle" aria-label="Mở menu" aria-expanded="false">
+            <button type="button" class="menu-toggle" aria-label="Mở menu" aria-expanded="false" aria-controls="primary-navigation">
                 <i class="fas fa-bars"></i>
             </button>
-            <ul class="nav-links">
+            <ul id="primary-navigation" class="nav-links">
                 <li><a href="index.html#products">Sản Phẩm</a></li>
                 <li><a href="index.html#features">Tính Năng</a></li>
                 <li><a href="index.html#gallery">Thư Viện</a></li>
@@ -43,28 +45,29 @@
     </nav>
 
     <!-- Product Detail Section -->
-    <section class="section product-detail-section">
+    <main id="product-detail" class="section product-detail-section" tabindex="-1" aria-busy="true">
         <div class="container">
+            <div id="detail-status" class="product-status" hidden></div>
             <div class="product-detail-wrapper">
                 <div class="product-detail-image">
-                    <div class="detail-image-frame" id="detail-image-frame" role="button" tabindex="0" aria-label="Xem ảnh phóng to">
-                        <img id="detail-image" src="" alt="Hình ảnh sản phẩm">
-                        <script>
-                            // Cùng ảnh với card vừa click → View Transition có ảnh để "bay" sang ngay lần render đầu
-                            (function () {
-                                try {
-                                    var d = JSON.parse(sessionStorage.getItem('ap3d-vt') || 'null');
-                                    if (d && d.id === new URLSearchParams(location.search).get('id')) {
-                                        document.getElementById('detail-image').src = d.src;
-                                    }
-                                } catch (e) {}
-                            })();
-                        </script>
-                    </div>
+                    <button type="button" class="detail-image-frame" id="detail-image-frame"
+                            aria-label="Xem ảnh phóng to" aria-haspopup="dialog" disabled>
+                        <img id="detail-image" alt="">
+                    </button>
+                    <script>
+                        // Giữ ảnh từ thẻ sản phẩm cho chuyển cảnh giữa hai trang.
+                        try {
+                            const transition = JSON.parse(sessionStorage.getItem('ap3d-vt') || 'null');
+                            sessionStorage.removeItem('ap3d-vt');
+                            if (transition && transition.id === new URLSearchParams(location.search).get('id')) {
+                                document.getElementById('detail-image').src = transition.src;
+                            }
+                        } catch {}
+                    </script>
                 </div>
                 <div class="product-detail-info" data-hero-hide>
                     <a href="index.html#products" class="back-link"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
-                    <span id="detail-category-badge" class="category-badge" style="display:none;"></span>
+                    <span id="detail-category-badge" class="category-badge" hidden></span>
                     <h1 id="detail-name">Đang tải...</h1>
                     <span id="detail-price" class="price-large">—</span>
                     <div class="divider"></div>
@@ -81,7 +84,7 @@
                         <i class="fas fa-tags"></i>
                         <div>
                             <strong>Mua nhiều giảm giá</strong>
-                            <span>Mua từ <strong>5 cái</strong>: giảm <strong>5.000₫/cái</strong> · Mua từ <strong>10 cái</strong>: giảm <strong>10.000₫/cái</strong></span>
+                            <span id="detail-discount-tiers"></span>
                         </div>
                     </div>
 
@@ -90,9 +93,9 @@
                         <div class="qty-row">
                             <label for="detail-qty">Số lượng</label>
                             <div class="qty-control">
-                                <button id="detail-qty-minus" type="button" aria-label="Giảm">−</button>
-                                <input id="detail-qty" type="number" min="1" max="99" value="1" inputmode="numeric">
-                                <button id="detail-qty-plus" type="button" aria-label="Tăng">+</button>
+                                <button id="detail-qty-minus" type="button" aria-label="Giảm số lượng" disabled>−</button>
+                                <input id="detail-qty" type="number" min="1" value="1" inputmode="numeric" disabled>
+                                <button id="detail-qty-plus" type="button" aria-label="Tăng số lượng" disabled>+</button>
                             </div>
                         </div>
                         <div class="qty-pricing">
@@ -101,13 +104,14 @@
                                 <span class="qty-total-label">Tổng tiền</span>
                                 <span class="qty-total" id="detail-total">—</span>
                             </div>
-                            <div class="qty-saved" id="detail-saved" style="display:none;"></div>
+                            <div class="qty-saved" id="detail-saved" hidden></div>
                             <div class="qty-next-hint" id="detail-next-hint"></div>
+                            <p id="detail-pricing-status" class="visually-hidden" role="status"></p>
                         </div>
                     </div>
 
                     <div class="cta-actions">
-                        <a id="detail-zalo-btn" href="https://zalo.me/0333255600" target="_blank" rel="noopener" class="btn btn-primary btn-block">
+                        <a id="detail-zalo-btn" target="_blank" rel="noopener" class="btn btn-primary btn-block">
                             <i class="fas fa-comment-dots"></i> Đặt Hàng Qua Zalo
                         </a>
                         <a href="https://www.facebook.com/tan.hai.668270" target="_blank" rel="noopener" class="btn btn-secondary btn-block">
@@ -117,7 +121,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -133,11 +137,11 @@
     </footer>
 
     <!-- Sticky Bottom CTA (mobile-friendly) -->
-    <div class="sticky-cta">
+    <div class="sticky-cta" hidden>
         <a href="tel:0333255600" class="sticky-cta-btn sticky-cta-call" aria-label="Gọi điện">
             <i class="fas fa-phone"></i>
         </a>
-        <a id="sticky-zalo-btn" href="https://zalo.me/0333255600" target="_blank" rel="noopener" class="sticky-cta-btn sticky-cta-zalo">
+        <a id="sticky-zalo-btn" target="_blank" rel="noopener" class="sticky-cta-btn sticky-cta-zalo">
             <i class="fas fa-comment-dots"></i> Đặt Zalo Ngay
         </a>
         <a href="https://www.facebook.com/tan.hai.668270" target="_blank" rel="noopener" class="sticky-cta-btn sticky-cta-fb" aria-label="Messenger">
@@ -149,6 +153,6 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
